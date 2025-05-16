@@ -15,6 +15,8 @@ export const criarUsuario = async (req, res) => {
     });
     await grupoPadrao.save();
 
+    // await sendmail(novoUsuario.email);
+
     res.status(201).json({
       usuario: novoUsuario,
       //grupoPadrao: grupoPadrao
