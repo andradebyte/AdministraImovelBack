@@ -1,5 +1,6 @@
 import { Pagamento } from '../models/Pagamento.js';
 
+// Criar pagamento
 export const criarPagamento = async (req, res) => {
     try {
         const novoPagamento = new Pagamento(req.body);
@@ -10,18 +11,16 @@ export const criarPagamento = async (req, res) => {
     }
 };
 
-export const listarPagamentos = async (req, res) => {
-    const pagamentos = await Pagamento.find().populate({
-        path: 'contrato',
-        populate: {
-            path: 'imovel',
-            populate: {
-                path: 'grupo',
-                populate: {
-                    path: 'usuario'
-                }
-            }
-        }
-    });
+// Listar pagamentos por contrato
+export const listarPagamentosPorContrato = async (req, res) => {
+    const { contratoId } = req.params;
+    const pagamentos = await Pagamento.find({ contrato: contratoId });
     res.json(pagamentos);
+};
+
+// Contar quantos pagamentos já foram feitos (número de parcelas pagas)
+export const contarPagamentosPorContrato = async (req, res) => {
+    const { contratoId } = req.params;
+    const total = await Pagamento.countDocuments({ contrato: contratoId });
+    res.json({ total });
 };

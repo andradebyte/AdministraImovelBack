@@ -1,9 +1,14 @@
 import express from 'express';
-import { criarPagamento, listarPagamentos } from '../controllers/pagamentoController.js';
+import {
+    criarPagamento,
+    listarPagamentosPorContrato,
+    contarPagamentosPorContrato
+} from '../controllers/pagamentoController.js';
 
 const router = express.Router();
 
 router.post('/', criarPagamento);
-router.get('/', listarPagamentos);
+router.get('/contrato/:contratoId', listarPagamentosPorContrato);
+router.get('/contrato/:contratoId/contagem', contarPagamentosPorContrato);
 
 export default router;

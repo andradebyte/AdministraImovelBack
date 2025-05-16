@@ -50,3 +50,20 @@ export const listarImoveis = async (req, res) => {
     res.status(500).json({ erro: err.message });
   }
 };
+
+// Imóvel por ID
+
+export const imovelPorId = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const imovel = await Imovel.findById(id).populate('grupo');
+    if (!imovel) {
+      return res.status(404).json({ erro: 'Imóvel não encontrado' });
+    }
+
+    res.status(200).json(imovel);
+  } catch (err) {
+    res.status(500).json({ erro: err.message });
+  }
+}

@@ -11,8 +11,10 @@ const contratoSchema = new mongoose.Schema({
     destino: String,
     reajuste: String,
     imovel: { type: mongoose.Schema.Types.ObjectId, ref: 'Imovel', required: true },
-    usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: true }
+    usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: true },
+    ativo: { type: Boolean, default: true }
 });
+
 
 
 export const Contrato = mongoose.model('Contrato', contratoSchema);
