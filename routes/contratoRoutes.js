@@ -5,7 +5,7 @@ import {
     listarContratosInativosPorImovel,
     listarContratosPorUsuario,
     inativarContrato
-} from '../controllers/contratoController.js';
+} from '../controllers/ContratoController.js';
 
 const router = express.Router();
 

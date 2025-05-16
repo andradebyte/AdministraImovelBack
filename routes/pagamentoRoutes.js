@@ -3,7 +3,7 @@ import {
     criarPagamento,
     listarPagamentosPorContrato,
     contarPagamentosPorContrato
-} from '../controllers/pagamentoController.js';
+} from '../controllers/PagamentoController.js';
 
 const router = express.Router();
 
