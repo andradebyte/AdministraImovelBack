@@ -1,5 +1,6 @@
-import jwt from "jsonwebtoken";
-import { isPasswordValid } from "../utils/hash";
+import { isPasswordValid } from "../utils/hash.js";
+import { Usuario } from "../models/Usuario.js";
+import { gerarToken } from "../utils/jwt.js";
 
 export const login = async (req, res) => {
 
@@ -11,13 +12,14 @@ export const login = async (req, res) => {
             return res.status(401).json({ erro: "Email inválido." });
         }
 
-        const senhaValida = isPasswordValid(senha, usuario.senha);
+        const senhaValida = await isPasswordValid(senha, usuario.senha);
 
         if (!senhaValida) {
             return res.status(401).json({ erro: "Senha inválida." });
         }
 
-        const token = jwt.sign({ id: usuario._id }, process.env.JWT_SECRET, process.env.JWT_EXPIRES_IN);
+        // Gerar o token JWT
+        const token = gerarToken(usuario);
 
         res.status(200).json({
             token,
@@ -29,6 +31,7 @@ export const login = async (req, res) => {
         });
 
     } catch (err) {
+        console.log("Erro: ", err);
         return res.status(500).json({ erro: "Erro ao realizar login." });
     }
 }

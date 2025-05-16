@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 const autenticarToken = (req, res, next) => {
     const authHeader = req.header('Authorization');
     const token = authHeader?.replace('Bearer ', '');

@@ -30,8 +30,6 @@ export const criarImovel = async (req, res) => {
   }
 };
 
-
-// ✅ Adicione esta função para corrigir o erro
 export const listarImoveis = async (req, res) => {
   try {
     const imoveis = await Imovel.find().populate('grupo');
@@ -40,8 +38,6 @@ export const listarImoveis = async (req, res) => {
     res.status(500).json({ erro: err.message });
   }
 };
-
-// ✅ Adicione esta função para corrigir o erro
 
 export const listarImovelPorGrupoOuTodos = async (req, res) => {
   try {
@@ -62,7 +58,7 @@ export const listarImovelPorGrupoOuTodos = async (req, res) => {
     } else {
       // Busca apenas imóveis do grupo específico
       imoveis = await Imovel.find({ grupo: grupoId }).populate({
-        path: 'grupo',  
+        path: 'grupo',
         populate: { path: 'usuario', select: 'nome email' }
       });
     }

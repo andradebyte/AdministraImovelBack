@@ -1,6 +1,5 @@
 import { Usuario } from '../models/Usuario.js';
 import { Grupo } from '../models/Grupo.js';
-import { sendmail } from '../utils/sendemail.js';
 
 export const criarUsuario = async (req, res) => {
   try {

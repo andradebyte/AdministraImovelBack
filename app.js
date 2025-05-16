@@ -7,6 +7,11 @@ import grupoRoutes from './routes/grupoRoutes.js';
 import imovelRoutes from './routes/imovelRoutes.js';
 import contratoRoutes from './routes/contratoRoutes.js';
 import pagamentoRoutes from './routes/pagamentoRoutes.js';
+import autenticacaoRoutes from './routes/autenticacaoRoutes.js';
+
+import jwt from 'jsonwebtoken';
+
+import autenticarToken from './middlewares/autenticarToken.js';
 
 dotenv.config();
 
@@ -24,15 +29,10 @@ app.use('/grupos', grupoRoutes);
 app.use('/imoveis', imovelRoutes);
 app.use('/contratos', contratoRoutes);
 app.use('/pagamentos', pagamentoRoutes);
-
-
-app.get('/', (req, res) => {
-    const { nome, email, senha } = req.body;
-    res.json({ nome, email, senha });
-});
+app.use('/login', autenticacaoRoutes);
 
 // Inicialização
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor rodando na porta ${PORT}`);
+    console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
 });

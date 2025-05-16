@@ -1,8 +1,9 @@
 import express from 'express';
-import { criarUsuario } from '../controllers/UsuarioController.js';
+import { criarUsuario, deletarUsuario } from '../controllers/UsuarioController.js';
 
 const router = express.Router();
 
 router.post('/', criarUsuario);
+router.delete('/:id', deletarUsuario);
 
 export default router;

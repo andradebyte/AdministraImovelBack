@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { hashPassword } from '../utils/hash';
+import { hashPassword } from '../utils/hash.js';
 
 const usuarioSchema = new mongoose.Schema({
   nome: { type: String, required: true },
@@ -7,10 +7,10 @@ const usuarioSchema = new mongoose.Schema({
   senha: { type: String, required: true }
 });
 
-usuarioSchema.pre('save', function (next) {
+usuarioSchema.pre('save', async function (next) {
   // Verifica se a senha foi modificada
   if (!this.isModified('senha')) return next();
-  this.senha = hashPassword(this.senha);
+  this.senha = await hashPassword(this.senha);
   next();
 });
 
