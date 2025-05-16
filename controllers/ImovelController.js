@@ -3,7 +3,7 @@ import { Grupo } from '../models/Grupo.js';
 
 export const criarImovel = async (req, res) => {
   try {
-    const { grupoId, nome, cep, tipo, rua, numero, bairro, complemento } = req.body;
+    const { grupoId, usuarioId, nome, cep, tipo, rua, numero, bairro, complemento } = req.body;
 
     // Verifica se o grupo existe
     const grupo = await Grupo.findById(grupoId);
@@ -20,7 +20,8 @@ export const criarImovel = async (req, res) => {
       numero,
       bairro,
       complemento,
-      grupo: grupoId
+      grupo: grupoId,
+      usuario: usuarioId
     });
 
     await novoImovel.save();
@@ -32,38 +33,19 @@ export const criarImovel = async (req, res) => {
 
 export const listarImoveis = async (req, res) => {
   try {
-    const imoveis = await Imovel.find().populate('grupo');
-    res.status(200).json(imoveis);
-  } catch (err) {
-    res.status(500).json({ erro: err.message });
-  }
-};
-
-export const listarImovelPorGrupoOuTodos = async (req, res) => {
-  try {
     const { grupoId, usuarioId } = req.body;
 
-    let imoveis;
-
-    if (grupoId === 'todos') {
-      // Busca todos os grupos do usuário
-      const gruposDoUsuario = await Grupo.find({ usuario: usuarioId }).select('_id');
-      const idsDosGrupos = gruposDoUsuario.map(grupo => grupo._id);
-
-      // Busca todos os imóveis desses grupos
-      imoveis = await Imovel.find({ grupo: { $in: idsDosGrupos } }).populate({
-        path: 'grupo',
-        populate: { path: 'usuario', select: 'nome email' }
-      });
-    } else {
-      // Busca apenas imóveis do grupo específico
-      imoveis = await Imovel.find({ grupo: grupoId }).populate({
-        path: 'grupo',
-        populate: { path: 'usuario', select: 'nome email' }
-      });
+    if (!usuarioId) {
+      return res.status(400).json({ erro: 'usuarioId é obrigatório' });
     }
 
-    res.status(200).json(imoveis);
+    if (!grupoId) {
+      const imoveis = await Imovel.find({ usuario: usuarioId }).populate('grupo');
+      return res.status(200).json(imoveis);
+    }
+
+    const imoveis = await Imovel.find({ grupo: grupoId }).populate('grupo');
+    return res.status(200).json(imoveis);
   } catch (err) {
     res.status(500).json({ erro: err.message });
   }

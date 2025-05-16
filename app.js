@@ -8,10 +8,7 @@ import imovelRoutes from './routes/imovelRoutes.js';
 import contratoRoutes from './routes/contratoRoutes.js';
 import pagamentoRoutes from './routes/pagamentoRoutes.js';
 import autenticacaoRoutes from './routes/autenticacaoRoutes.js';
-
-import jwt from 'jsonwebtoken';
-
-import autenticarToken from './middlewares/autenticarToken.js';
+import autenticarToken from './middlewares/autenticarToken.js'; // aqui está o middleware de autenticação
 
 dotenv.config();
 
@@ -30,6 +27,15 @@ app.use('/imoveis', imovelRoutes);
 app.use('/contratos', contratoRoutes);
 app.use('/pagamentos', pagamentoRoutes);
 app.use('/login', autenticacaoRoutes);
+
+// Se o token for válido, o usuário poderá acessar essa rota caso contrário fica na tela de login
+app.get('/verificar-token', autenticarToken, (req, res) => {
+    res.json({
+        usuario: req.user,
+        mensagem: 'Token válido'
+    });
+});
+
 
 // Inicialização
 const PORT = process.env.PORT || 3000;

@@ -10,7 +10,9 @@ const contratoSchema = new mongoose.Schema({
     caucao: { type: mongoose.Decimal128, default: 0.0 },
     destino: String,
     reajuste: String,
-    imovel: { type: mongoose.Schema.Types.ObjectId, ref: 'Imovel', required: true }
+    imovel: { type: mongoose.Schema.Types.ObjectId, ref: 'Imovel', required: true },
+    usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: true }
 });
+
 
 export const Contrato = mongoose.model('Contrato', contratoSchema);

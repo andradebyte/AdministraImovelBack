@@ -1,10 +1,9 @@
 import express from 'express';
-import { criarImovel, listarImoveis, listarImovelPorGrupoOuTodos } from '../controllers/ImovelController.js';
+import { criarImovel, listarImoveis } from '../controllers/ImovelController.js';
 
 const router = express.Router();
 
-router.post('/', criarImovel); // espera: { usuarioId, nome, tipo, etc. }
+router.post('/', criarImovel);
 router.get('/', listarImoveis);
-router.post('/imoveisPorGrupo', listarImovelPorGrupoOuTodos);
 
 export default router;
