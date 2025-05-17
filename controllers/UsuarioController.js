@@ -1,6 +1,5 @@
 import { Usuario } from '../models/Usuario.js';
 import { Grupo } from '../models/Grupo.js';
-import { sendmailReset, sendmail } from '../utils/sendemail.js';
 
 export const criarUsuario = async (req, res) => {
   try {
@@ -14,8 +13,6 @@ export const criarUsuario = async (req, res) => {
       usuario: novoUsuario._id
     });
     await grupoPadrao.save();
-
-    // await sendmail(novoUsuario.email);
 
     res.status(201).json({
       usuario: novoUsuario,

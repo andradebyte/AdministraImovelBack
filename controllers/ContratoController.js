@@ -11,6 +11,13 @@ export const criarContrato = async (req, res) => {
     }
 };
 
+// Listar contratos de um usuário
+export const listarContratosPorUsuario = async (req, res) => {
+    const { usuarioId } = req.params;
+    const contratos = await Contrato.find({ usuario: usuarioId }).populate('imovel');
+    res.json(contratos);
+};
+
 // Listar contrato ativo de um imóvel
 export const listarContratoAtivoPorImovel = async (req, res) => {
     const { imovelId } = req.params;
@@ -25,12 +32,6 @@ export const listarContratosInativosPorImovel = async (req, res) => {
     res.json(historico);
 };
 
-// Listar contratos de um usuário
-export const listarContratosPorUsuario = async (req, res) => {
-    const { usuarioId } = req.params;
-    const contratos = await Contrato.find({ usuario: usuarioId }).populate('imovel');
-    res.json(contratos);
-};
 
 //Inativar contrato
 export const inativarContrato = async (req, res) => {
