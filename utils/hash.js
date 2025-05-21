@@ -13,7 +13,6 @@ export const hashPassword = async (password) => {
 export const isPasswordValid = async (password, hashedPassword) => {
 
     if (!password || !hashedPassword) {
-        console.error("Senha ou hash não fornecidos:", { password, hashedPassword });
         throw new Error("Senha e hash são obrigatórios para verificação.");
     }
 
